@@ -1,11 +1,15 @@
-import "../styles/globals.css"
+import "@/styles/globals.css";
 
-import React from "react"
+import { ThemeProvider } from "next-themes";
+import React from "react";
 
 export default function RootLayout({ children }: { children: React.ReactNode }): React.JSX.Element {
 	return (
-		<html lang="en">
-			<body>{children}</body>
+		<html suppressHydrationWarning lang="en">
+			<head />
+			<body>
+				<ThemeProvider attribute="class">{children}</ThemeProvider>
+			</body>
 		</html>
-	)
+	);
 }
