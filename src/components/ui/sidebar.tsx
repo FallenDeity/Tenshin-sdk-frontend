@@ -6,6 +6,7 @@ import Link, { LinkProps } from "next/link";
 import React, { createContext, useContext, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { slideIn } from "@/lib/variants";
 
 interface Links {
 	label: string;
@@ -92,7 +93,7 @@ export const DesktopSidebar = ({
 		<>
 			<motion.div
 				className={cn(
-					"hidden h-full w-[300px] flex-shrink-0 bg-neutral-100 px-4 py-4 dark:bg-neutral-800 md:flex md:flex-col",
+					"hidden h-full w-[300px] flex-shrink-0 bg-secondary px-4 py-4 md:flex md:flex-col",
 					className
 				)}
 				animate={{
@@ -113,11 +114,11 @@ export const MobileSidebar = ({ className, children, ...props }: React.Component
 		<>
 			<div
 				className={cn(
-					"flex h-10 w-full flex-row items-center justify-between bg-neutral-100 px-4 py-4 dark:bg-neutral-800 md:hidden"
+					"flex h-10 w-full flex-row items-center justify-between bg-secondary px-4 py-4 md:hidden"
 				)}
 				{...props}>
 				<div className="z-20 flex w-full justify-end">
-					<Menu className="text-neutral-800 dark:text-neutral-200" onClick={() => setOpen(!open)} />
+					<Menu onClick={() => setOpen(!open)} />
 				</div>
 				<AnimatePresence>
 					{open && (
@@ -130,12 +131,10 @@ export const MobileSidebar = ({ className, children, ...props }: React.Component
 								ease: "easeInOut",
 							}}
 							className={cn(
-								"fixed inset-0 z-[100] flex h-full w-full flex-col justify-between bg-white p-10 dark:bg-neutral-900",
+								"fixed inset-0 z-[100] flex h-full w-full flex-col justify-between bg-secondary p-10",
 								className
 							)}>
-							<div
-								className="absolute right-10 top-10 z-50 text-neutral-800 dark:text-neutral-200"
-								onClick={() => setOpen(!open)}>
+							<div className="absolute right-10 top-10 z-50" onClick={() => setOpen(!open)}>
 								<X />
 							</div>
 							{children}
@@ -169,7 +168,7 @@ export const SidebarLink = ({
 					display: animate ? (open ? "inline-block" : "none") : "inline-block",
 					opacity: animate ? (open ? 1 : 0) : 1,
 				}}
-				className="!m-0 inline-block whitespace-pre !p-0 text-sm text-neutral-700 transition duration-150 group-hover/sidebar:translate-x-1 dark:text-neutral-200">
+				className="!m-0 inline-block whitespace-pre !p-0 text-sm transition duration-150 group-hover/sidebar:translate-x-1">
 				{link.label}
 			</motion.span>
 		</Link>
@@ -207,7 +206,7 @@ export const SidebarLinkGroup = ({
 								display: animate ? (open ? "inline-block" : "none") : "inline-block",
 								opacity: animate ? (open ? 1 : 0) : 1,
 							}}
-							className="!m-0 inline-block whitespace-pre !p-0 text-sm text-neutral-700 transition duration-150 group-hover/sidebar:translate-x-1 dark:text-neutral-200">
+							className="!m-0 inline-block whitespace-pre !p-0 text-sm transition duration-150 group-hover/sidebar:translate-x-1">
 							{group.label}
 						</motion.span>
 					</span>
@@ -227,21 +226,35 @@ export const SidebarLinkGroup = ({
 							display: animate ? (open ? "inline-block" : "none") : "inline-block",
 							opacity: animate ? (open ? 1 : 0) : 1,
 						}}
-						className="!m-0 inline-block whitespace-pre !p-0 text-sm text-neutral-700 transition duration-150 group-hover/sidebar:translate-x-1 dark:text-neutral-200">
+						className="!m-0 inline-block whitespace-pre !p-0 text-sm transition duration-150 group-hover/sidebar:translate-x-1">
 						{group.label}
 					</motion.span>
 				</div>
 			)}
 			<motion.div
+				className="flex flex-col overflow-hidden"
 				initial={false}
-				animate={{ height: collapsed ? 0 : "auto" }}
-				transition={{ duration: 0.3 }}
-				className="overflow-hidden">
+				animate={{ height: collapsed || !open ? 0 : "auto" }}
+				transition={{ delay: (group.links.length + group.groups.length - 2) * 0.1 * 0.3, duration: 0.3 }}>
 				{group.links.map((link, idx) => (
-					<SidebarLink key={idx} link={link} className="pl-6" />
+					<motion.div
+						key={idx}
+						initial="hidden"
+						whileInView="animate"
+						custom={collapsed}
+						variants={slideIn("left", "tween", 0.1 * idx, 0.3)}>
+						<SidebarLink key={idx} link={link} className="pl-6" />
+					</motion.div>
 				))}
 				{group.groups.map((group, idx) => (
-					<SidebarLinkGroup key={idx} group={group} className="pl-6" />
+					<motion.div
+						key={idx}
+						initial="hidden"
+						whileInView="animate"
+						custom={collapsed}
+						variants={slideIn("left", "tween", 0.1 * idx + (group.links.length + 1) * 0.1, 0.3)}>
+						<SidebarLinkGroup key={idx} group={group} className="pl-6" />
+					</motion.div>
 				))}
 			</motion.div>
 		</div>

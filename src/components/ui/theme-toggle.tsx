@@ -13,14 +13,12 @@ function DarkModeToggleV2(): JSX.Element {
 
 	return (
 		<div
-			className={`flex h-8 w-16 cursor-pointer rounded-full p-1 transition-all duration-300 ${
-				theme === "dark" ? "border border-zinc-800 bg-zinc-950" : "border border-zinc-200 bg-white"
-			}`}
+			className={`flex h-8 w-16 cursor-pointer rounded-full border bg-background p-1 shadow-sm transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=unchecked]:bg-input dark:border-primary/20`}
 			onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
 			<div className="flex w-full items-center justify-between">
 				<div
-					className={`flex h-6 w-6 items-center justify-center rounded-full transition-transform duration-300 ${
-						theme === "dark" ? "translate-x-0 transform bg-zinc-800" : "translate-x-8 transform bg-gray-200"
+					className={`flex h-6 w-6 items-center justify-center rounded-full bg-accent transition-transform duration-300 ${
+						theme === "dark" ? "translate-x-0 transform" : "translate-x-8 transform"
 					}`}>
 					{theme === "dark" ? (
 						<svg
