@@ -24,8 +24,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 			icon: <UserSearch className="h-5 w-5 flex-shrink-0" />,
 		},
 		{
-			label: "Settings",
-			href: "#",
+			label: "Create Project",
+			href: "/project",
 			icon: <Settings className="h-5 w-5 flex-shrink-0" />,
 		},
 		{
@@ -50,7 +50,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 					icon: <UserSearch className="h-5 w-5 flex-shrink-0" />,
 				},
 				{
-					label: "Settings",
+					label: "Create Project",
 					href: "#",
 					icon: <Settings className="h-5 w-5 flex-shrink-0" />,
 				},
