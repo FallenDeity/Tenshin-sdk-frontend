@@ -1,7 +1,7 @@
 "use client";
 
 import { Eye, EyeOff, PlusCircle, X } from "lucide-react";
-import { ProjectOptions } from "next/dist/build/swc";
+// import { ProjectOptions } from "next/dist/build/swc";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -68,7 +68,7 @@ interface ProjectData {
 	};
 }
 
-export default function Component() {
+export default function Component(): JSX.Element {
 	const [projectData, setProjectData] = useState<ProjectData>({
 		project_name: "",
 		project_description: "",
@@ -117,7 +117,7 @@ export default function Component() {
 
 	const [showPassword, setShowPassword] = useState(false);
 
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
 		const { name, value } = e.target;
 		setProjectData((prevData) => ({
 			...prevData,
@@ -125,7 +125,7 @@ export default function Component() {
 		}));
 	};
 
-	const handleProtocolConfigChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleProtocolConfigChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
 		const { name, value } = e.target;
 		setProjectData((prevData) => ({
 			...prevData,
@@ -136,7 +136,7 @@ export default function Component() {
 		}));
 	};
 
-	const handleSwitchChange = (checked: boolean, name: keyof ProjectData) => {
+	const handleSwitchChange = (checked: boolean, name: "logging" | "retry_policy"): void => {
 		setProjectData((prevData) => ({
 			...prevData,
 			[name]: {
@@ -146,7 +146,7 @@ export default function Component() {
 		}));
 	};
 
-	const handleSelectChange = (value: string, name: keyof ProjectData) => {
+	const handleSelectChange = (value: string, name: "logging" | "retry_policy"): void => {
 		setProjectData((prevData) => ({
 			...prevData,
 			[name]: {
@@ -156,13 +156,13 @@ export default function Component() {
 		}));
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = (e: React.FormEvent): void => {
 		e.preventDefault();
 		console.log("Project data submitted:", projectData);
 		// Here you would typically send the data to your backend
 	};
 
-	const handleAddGroup = () => {
+	const handleAddGroup = (): void => {
 		if (newGroup.group_name && newGroup.group_id) {
 			setProjectData((prevData) => ({
 				...prevData,
@@ -178,7 +178,7 @@ export default function Component() {
 		}
 	};
 
-	const handleAddVariable = (groupId: string) => {
+	const handleAddVariable = (groupId: string): void => {
 		if (newVariable.variable_name && newVariable.variable_id) {
 			setProjectData((prevData) => ({
 				...prevData,
@@ -202,14 +202,14 @@ export default function Component() {
 		}
 	};
 
-	const handleRemoveGroup = (groupId: string) => {
+	const handleRemoveGroup = (groupId: string): void => {
 		setProjectData((prevData) => ({
 			...prevData,
 			variable_groups: prevData.variable_groups.filter((group) => group.group_id !== groupId),
 		}));
 	};
 
-	const handleRemoveVariable = (groupId: string, variableId: string) => {
+	const handleRemoveVariable = (groupId: string, variableId: string): void => {
 		setProjectData((prevData) => ({
 			...prevData,
 			variable_groups: prevData.variable_groups.map((group) =>
@@ -562,7 +562,7 @@ export default function Component() {
 													</DialogFooter>
 												</DialogContent>
 											</Dialog>
-											{group.variables.map((variable, variableIndex) => (
+											{group.variables.map((variable) => (
 												<div key={variable.variable_id} className="mb-2 rounded border p-2">
 													<div className="flex items-center justify-between">
 														<h4 className="font-medium">{variable.variable_name}</h4>
